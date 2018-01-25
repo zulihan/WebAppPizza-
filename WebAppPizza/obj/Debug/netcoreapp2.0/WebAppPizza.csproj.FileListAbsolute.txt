@@ -1,0 +1,12 @@
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\bin\Debug\netcoreapp2.0\WebAppPizza.deps.json
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\bin\Debug\netcoreapp2.0\WebAppPizza.runtimeconfig.json
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\bin\Debug\netcoreapp2.0\WebAppPizza.runtimeconfig.dev.json
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\bin\Debug\netcoreapp2.0\WebAppPizza.dll
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\bin\Debug\netcoreapp2.0\WebAppPizza.pdb
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.csprojResolveAssemblyReference.cache
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.csproj.CoreCompileInputs.cache
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.AssemblyInfoInputs.cache
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.AssemblyInfo.cs
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.dll
+c:\users\dmr\documents\visual studio 2017\Projects\WebAppPizza\WebAppPizza\obj\Debug\netcoreapp2.0\WebAppPizza.pdb

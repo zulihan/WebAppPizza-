@@ -1,0 +1,18 @@
+﻿@model PaginationViewModel;
+
+
+@if (Model.ItemsCount > 1)
+{
+    <div class="row">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+
+                @for (int i = 1; i <= Model.ItemsCount; i++)
+                {
+                    <li class="@(Model.CurrentPage == i ? "active" : String.Empty)"><a class="page-link" asp-route-page="@i">@i</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+}
