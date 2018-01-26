@@ -21,6 +21,7 @@ namespace WebAppPizza.Models
         }
              
 
+        // Mon code tout pourri
 
         //public int NumOfPages()        {
         //    int TotalPizzas = Pizza.Count;

@@ -18,17 +18,28 @@ namespace WebAppPizza.Areas.Admin.Controllers
         private IHostingEnvironment _env;
         private IStaticRepository _staticRepository { get; set; }
 
-        public PizzaController(IHostingEnvironment env, IStaticRepository staticRepository)
+        private IRepositoryable<Pizza> _pizzaRepository;
+        private object _configuration;
+
+        public PizzaController(IHostingEnvironment env, IStaticRepository staticRepository, IRepositoryable<Pizza> pizzaRepository)
+            
         {
             _staticRepository = staticRepository;
+            _pizzaRepository = pizzaRepository;
             this._env = env;
         }
 
-        public IActionResult Index()
+        [HttpGet("[controller]/[action]/Page/{page?}")]
+        public IActionResult Index(int page = 1)
         {
             var pizzasVM = new List<adm.PizzaViewModel>();
 
-            foreach (var pizza in _staticRepository.Pizzas)
+            int itemsPerPage = Convert.ToByte(_configuration.GetValue(typeof(byte), "itemsPerPage"));
+
+            ViewBag.ItemsCount = Math.Ceiling((decimal))13 / itemsPerPage);
+            ViewBag.CurrentPage = page;
+
+            foreach (var pizza in _pizzaRepository.Read((page - 1 ) * itemsPerPage , itemsPerPage))
             {
                 pizzasVM.Add(new adm.PizzaViewModel()
                 {
