@@ -26,6 +26,9 @@ namespace WebAppPizza.Areas.Admin.Models
         [Display(Name = "Prix H.T")]
         public decimal PriceHT { get; set; }
 
+        public decimal PriceTTC { get { return this.PriceHT * 1.2m; } set { } }
+
+        
         public string Image { get; set; }
 
         public IFormFile UploadImage { get; set; }

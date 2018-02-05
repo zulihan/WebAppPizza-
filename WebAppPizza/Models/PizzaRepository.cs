@@ -10,6 +10,8 @@ namespace WebAppPizza.Models
     {
         private PizzaDbContext _context;
 
+        public object Pizzas => throw new NotImplementedException();
+
         public PizzaRepository(PizzaDbContext context)
         {
             this._context = context;
@@ -33,7 +35,7 @@ namespace WebAppPizza.Models
         }
 
 
-        public List<Pizza> Read(int take, int skip)
+        public List<Pizza> Read(int skip, int take)
         {
             return this._context.Pizza.Skip(skip).Take(take).ToList();
         }

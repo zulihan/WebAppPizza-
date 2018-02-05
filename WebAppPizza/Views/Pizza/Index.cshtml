@@ -1,5 +1,6 @@
-﻿
-@model List<PizzaViewModel>
+﻿@using adm = WebAppPizza.Areas.Admin.Models
+
+@model List<adm.PizzaViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -17,13 +18,13 @@
     {
         <div class="col-md-4">
             <div class="thumbnail">
-                <img src="~/images/@pizzaVM.Pizza.Image" alt="Pizza @pizzaVM.Pizza.Title">
+                <img src="~/images/@pizzaVM.Image" alt="Pizza @pizzaVM.Title">
                 <div class="caption">
-                    <h3>@pizzaVM.Pizza.Title</h3>
-                    <p>@pizzaVM.Pizza.Description</p>
-                    <p>@pizzaVM.PriceTTC()</p>
-                    <p><a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@pizzaVM.Pizza.IDPizza" class="btn btn-primary" role="button">Commander</a></p>
-                    <a data-id="@pizzaVM.Pizza.IDPizza" class="btn btn-primary detail" role="button">Détails</a>
+                    <h3>@pizzaVM.Title</h3>
+                    <p>@pizzaVM.Description</p>
+                    <p>@pizzaVM.PriceTTC</p>
+                    <p><a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@pizzaVM.IDPizza" class="btn btn-primary" role="button">Commander</a></p>
+                    <a data-id="@pizzaVM.IDPizza" class="btn btn-primary detail" role="button">Détails</a>
                 </div>
             </div>
         </div>
@@ -31,7 +32,7 @@
 
     @Html.Partial("_PaginationPartial", PaginationPartial)
 
-        <div class="container-modal"></div>
+    <div class="container-modal"></div>
 
     @section Scripts{
         <script src="~/js/pizza-controller.js"></script>

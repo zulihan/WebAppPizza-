@@ -8,6 +8,8 @@ namespace WebAppPizza.Models
     public interface IRepositoryable<T>
         where T : class
     {
+        object Pizzas { get; }
+
         void Create(T obj);
 
         void Update(T obj);

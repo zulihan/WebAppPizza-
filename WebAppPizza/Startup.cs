@@ -29,11 +29,15 @@ namespace WebAppPizza
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<PizzaDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("PizzaConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
+            services.AddTransient<IRepositoryable<Pizza>, PizzaRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IStaticRepository, StaticRepository>();            
             services.AddMvc();

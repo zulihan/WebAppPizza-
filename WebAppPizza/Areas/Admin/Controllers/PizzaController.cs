@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using WebAppPizza.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAppPizza.Areas.Admin.Controllers
 {
@@ -17,26 +18,30 @@ namespace WebAppPizza.Areas.Admin.Controllers
     {
         private IHostingEnvironment _env;
         private IStaticRepository _staticRepository { get; set; }
+        
 
         private IRepositoryable<Pizza> _pizzaRepository;
-        private object _configuration;
 
-        public PizzaController(IHostingEnvironment env, IStaticRepository staticRepository, IRepositoryable<Pizza> pizzaRepository)
+        private IConfiguration _configuration;
+
+        public PizzaController(IHostingEnvironment env, IStaticRepository staticRepository, IRepositoryable<Pizza> pizzaRepository, IConfiguration configuration)
             
         {
+            _configuration = configuration;
             _staticRepository = staticRepository;
             _pizzaRepository = pizzaRepository;
             this._env = env;
         }
 
-        [HttpGet("[controller]/[action]/Page/{page?}")]
+        [HttpGet]
+        [Route("Admin/[controller]/[action]/Page/{page?}")]
         public IActionResult Index(int page = 1)
         {
             var pizzasVM = new List<adm.PizzaViewModel>();
 
-            int itemsPerPage = Convert.ToByte(_configuration.GetValue(typeof(byte), "itemsPerPage"));
+            byte itemsPerPage = Convert.ToByte(_configuration.GetValue(typeof(byte), "itemsPerPage"));
 
-            ViewBag.ItemsCount = Math.Ceiling((decimal))13 / itemsPerPage);
+            ViewBag.ItemsCount = Math.Ceiling((decimal)((PizzaRepository)_pizzaRepository).Count() / itemsPerPage);
             ViewBag.CurrentPage = page;
 
             foreach (var pizza in _pizzaRepository.Read((page - 1 ) * itemsPerPage , itemsPerPage))
@@ -72,7 +77,8 @@ namespace WebAppPizza.Areas.Admin.Controllers
                 if(size > 0)
                 {
                     filename = await CreateFileOnServerAsync(pizzaVM.UploadImage);
-
+                }
+                
                     var pizza = new Pizza()
                     {
                         Description = pizzaVM.Description,
@@ -82,8 +88,8 @@ namespace WebAppPizza.Areas.Admin.Controllers
                     };
 
                     //TODO:Save Pizza in db
-                    _staticRepository.Pizzas.Add(pizza);
-                }
+                    _pizzaRepository.Create(pizza);
+                    //_staticRepository.Pizzas.Add(pizza);
             }
             else
             {
