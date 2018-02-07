@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WebAppPizza.Data;
 using WebAppPizza.Models;
 using WebAppPizza.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAppPizza
 {
@@ -29,22 +30,25 @@ namespace WebAppPizza
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<PizzaDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("PizzaConnection")));
+            services.AddDbContext<PizzaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PizzaConnection")));
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IRepositoryable<Pizza>, PizzaRepository>();
+            // Add application services.  transiant// scope// singleton//////   a la demande partager// pour le meme pool de l'application //  unique pour l'aplication
+            services.AddTransient<IRepositoryable<Pizza>, PizzaRepository>();  //  quand on peut pas faire du singleton on fait  du transiant ou scope
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IStaticRepository, StaticRepository>();            
+            services.AddSingleton<IStaticRepository, StaticRepository>();
+            services.AddScoped<Cart>(Sp => SessionCart.GetCart(Sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -58,20 +62,23 @@ namespace WebAppPizza
             }
 
             app.UseStaticFiles();
-
             app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");                
+                   name: "default",
+                   template: "{controller=Home}/{action=Index}/{id?}");
 
             });
+            await SeedUserAndRole.EnsurePopulateRole(app); // appelle les methode pour ajouter des comptes dans ta base
+            await SeedUserAndRole.EnsurePopulateUserAdmin(app);// erreur car le provider default , il sait pas si cest en transiant/scope/singleton donc on rajoute dans la classe programme comment ils fonctionne
         }
     }
 }

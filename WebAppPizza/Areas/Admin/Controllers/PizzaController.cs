@@ -10,15 +10,16 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using WebAppPizza.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppPizza.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles="Admin")]
     public class PizzaController : Controller
     {
         private IHostingEnvironment _env;
-        private IStaticRepository _staticRepository { get; set; }
-        
+        private IStaticRepository _staticRepository { get; set; }        
 
         private IRepositoryable<Pizza> _pizzaRepository;
 

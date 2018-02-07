@@ -97,16 +97,17 @@ namespace WebAppPizza.Controllers
             //var pizzaVM = new PizzaViewModel()
             //{
             //    Pizza = pizza
-            //};
-            var pizzaVM = new adm.PizzaViewModel();
+            //};            
             var pizza = this._pizzaRepository.ReadById(id);
 
-            pizzaVM.Description = pizza.Description;
-            pizzaVM.Image = pizza.Image;
-            pizzaVM.PriceHT = pizza.PriceHT;
-            pizzaVM.Title = pizza.Title;
-            pizzaVM.IDPizza = pizza.IDPizza;
-
+            var pizzaVM = new adm.PizzaViewModel()
+            {
+                Description = pizza.Description,
+                Image = pizza.Image,
+                PriceHT = pizza.PriceHT,
+                Title = pizza.Title,
+                IDPizza = pizza.IDPizza
+        };
             return PartialView("DetailPartial", pizzaVM);
         }
     }
